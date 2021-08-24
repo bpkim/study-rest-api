@@ -4,6 +4,7 @@ import com.bpkim.studyrestapi.accounts.Account;
 import com.bpkim.studyrestapi.accounts.AccountRepository;
 import com.bpkim.studyrestapi.accounts.AccountRole;
 import com.bpkim.studyrestapi.accounts.AccountService;
+import com.bpkim.studyrestapi.common.AppProperties;
 import com.bpkim.studyrestapi.common.RestDocsConfiguration;
 import com.bpkim.studyrestapi.common.TestDescription;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,12 +67,14 @@ public class EventControllerTests2 {
     @Autowired
     ModelMapper modelMapper;
 
-
     @Autowired
     AccountService accountService;
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    AppProperties appProperties;
 
     @Before
     public void setUp(){
@@ -452,8 +455,8 @@ public class EventControllerTests2 {
     private String getAccessToken() throws Exception{
 
 
-        String password = "password";
-        String username = "bpkim@email.com";
+        String password = appProperties.getUserPassword();
+        String username = appProperties.getUserUsername();
         Account account = Account.builder()
                 .email(username)
                 .password(password)
@@ -462,8 +465,8 @@ public class EventControllerTests2 {
 
         this.accountService.saveAccount(account);
 
-        String clientId = "myApp";
-        String clientSecret = "pass";
+        String clientId = appProperties.getClientId();
+        String clientSecret = appProperties.getClientSecret();
         ResultActions result = this.mockMvc.perform(post("/oauth/token")
                 .with(httpBasic(clientId, clientSecret))  // header 생성
                 .param("username", username)

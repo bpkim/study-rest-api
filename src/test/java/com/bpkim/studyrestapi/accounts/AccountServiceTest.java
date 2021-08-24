@@ -1,5 +1,6 @@
 package com.bpkim.studyrestapi.accounts;
 
+import com.bpkim.studyrestapi.common.AppProperties;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,14 @@ public class AccountServiceTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    AppProperties appProperties;
+
     @Test
     public void findByUsername(){
 
-        String password = "password";
-        String username = "bpkim@email.com";
+        String password = appProperties.getUserPassword();
+        String username = appProperties.getUserUsername();
         Account account = Account.builder()
                             .email(username)
                             .password(password)

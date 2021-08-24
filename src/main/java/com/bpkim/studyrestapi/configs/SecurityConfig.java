@@ -65,12 +65,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 
 
-    // 인증 로그인 화면
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.anonymous()
                 .and()
-            .formLogin()
+            .formLogin()// 인증 로그인 화면
                 .and()
             .authorizeRequests().mvcMatchers(HttpMethod.GET, "/api/**").authenticated()
             .anyRequest().authenticated();

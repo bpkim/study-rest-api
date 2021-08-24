@@ -25,8 +25,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.anonymous()
                 .and()
+                .formLogin()
+                .and()
              .authorizeRequests()
-                .mvcMatchers(HttpMethod.POST, "/api/account").anonymous()// 회원가입 허용
                 .mvcMatchers(HttpMethod.GET, "/api/**") // api 로 들어오는건 허용
 
                     .anonymous()
